@@ -26,12 +26,27 @@ def process_filters(filters_input):
         # We need to capture and return what filters are already applied so they can be automatically added to any existing links we display in aggregations.jinja2
         applied_filters += "&filter.name={}&{}.type={}&{}.displayName={}".format(filter, filter, type, filter,
                                                                                  display_name)
-        #TODO: IMPLEMENT AND SET filters, display_filters and applied_filters.
-        # filters get used in create_query below.  display_filters gets used by display_filters.jinja2 and applied_filters gets used by aggregations.jinja2 (and any other links that would execute a search.)
         if type == "range":
-            pass
+            filter_key = request.args.get(filter + ".key")
+            filter_from = request.args.get(filter + ".from")
+            filter_to = request.args.get(filter + ".to")
+            rangeDict = {}
+            if filter_from:
+                rangeDict['gte'] = filter_from
+            if filter_to:
+                rangeDict['lt'] = filter_to
+            filters.append({ 'range': { filter: rangeDict } })
+            display_filters.append("{n:s}: {f:s} -- {t:s}".format(
+                                   n=display_name, f=filter_from, t=filter_to))
+            applied_filters += "&{n:s}.key={k:s}&{n:s}.from={f:s}&{n:s}.to={t:s}".format(
+                               n=filter, k=filter_key, f=filter_from, t=filter_to)
         elif type == "terms":
-            pass #TODO: IMPLEMENT
+            filter_key = request.args.get(filter + ".key")
+            filters.append({ 'term': { filter + ".keyword": filter_key } })
+            display_filters.append("{n:s}: {k:s}".format(
+                                   n=display_name, k=filter_key))
+            applied_filters += "&{n:s}.key={k:s}".format(
+                               n=filter, k=filter_key)
     print("Filters: {}".format(filters))
 
     return filters, display_filters, applied_filters
@@ -74,7 +89,7 @@ def query():
         query_obj = create_query("*", [], sort, sortDir)
 
     print("query obj: {}".format(query_obj))
-    response = None   # TODO: Replace me with an appropriate call to OpenSearch
+    response = opensearch.search(index='bbuy_products', body=query_obj)
     # Postprocess results here if you so desire
 
     #print(response)
@@ -86,15 +101,52 @@ def query():
         redirect(url_for("index"))
 
 
-def create_query(user_query, filters, sort="_score", sortDir="desc"):
-    print("Query: {} Filters: {} Sort: {}".format(user_query, filters, sort))
+def create_query(user_query, filters, sortArg="_score", sortDir="desc"):
+    print("Query: {} Filters: {} Sort: {}".format(user_query, filters, sortArg))
     query_obj = {
         'size': 10,
-        "query": {
-            "match_all": {} # Replace me with a query that both searches and filters
+        'query': {
+            'bool': {
+                'must': {
+                    'multi_match': {
+                        'query': user_query,
+                        'fields': ['name^100', 'shortDescription^50', 'longDescription^10', 'department'],
+                    }
+                },
+                'filter': filters
+            }
         },
-        "aggs": {
-            #TODO: FILL ME IN
+        'sort': {
+            sortArg: sortDir
+        },
+        'aggs': {
+            'regularPrice': {
+                'range': {
+                    'field': 'regularPrice',
+                    'ranges': [
+                        {               'to':    10 },
+                        { 'from':   10, 'to':   100 },
+                        { 'from':  100, 'to':  1000 },
+                        { 'from': 1000              },
+                    ]
+                }
+            },
+            'departments': {
+                'terms': {
+                    'field': 'department.keyword'
+                }
+            },
+            'missing_images': {
+                'filter': {
+                    'bool': {
+                        'must_not': {
+                            'exists': {
+                                'field': 'image'
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     return query_obj
