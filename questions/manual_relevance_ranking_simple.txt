@@ -1,0 +1,75 @@
+Query: lcd tv
+Sort field: _score,  Sort dir: desc,  Model: simple,  Explain is disabled
+Searcher is probably looking for a television with an LCD display.
+Probably not a portable TV, but unless they try to exclude it, portable
+seems relevant.
+Mark relevant rows with asterisk.
+* 1:  ID: 1130985858109  SKU: 7622664(not in most clicked)  Name: HANNspree - HANNSgolf 15" LCD TV
+* 2:  ID: 1142302026085  SKU: 7863939(not in most clicked)  Name: HANNspree - HANNSbugsy 12" LCD TV
+* 3:  ID: 1142302026158  SKU: 7863948(not in most clicked)  Name: HANNspree - HANNSwood 10" LCD TV
+* 4:  ID: 1130985858687  SKU: 7623217(not in most clicked)  Name: Curtis - 2.5" Portable LCD TV
+* 5:  ID: 1051826217494  SKU: 5518889(not in most clicked)  Name: Polaroid - 20" Flat-Panel LCD TV
+* 6:  ID: 1218216965360  SKU: 1068277(not in most clicked)  Name: Viore - 7" Widescreen Portable LCD TV
+* 7:  ID: 1218251721999  SKU: 1344538(not in most clicked)  Name: Philips - 9" Class / Portable LCD TV
+* 8:  ID: 1218227229707  SKU: 1157049(not in most clicked)  Name: Axion - Axion 7" Widescreen Portable LCD TV
+* 9:  ID: 1218268349524  SKU: 1551014(not in most clicked)  Name: Philips - Refurbished 9" Class / Portable LCD TV
+*10:  ID: 1051806133519  SKU: 4502363(not in most clicked)  Name: Panasonic - 15" LCD TV/DVD Player Combo
+
+Query: ipad
+Sort field: _score,  Sort dir: desc,  Model: simple,  Explain is disabled
+Searcher is probably looking for an iPad, not an iPad accessory.
+Mark relevant rows with asterisk (none seem relevant).
+  1:  ID: 1218700153238  SKU: 5879736(not in most clicked)  Name: iphome - iPad Stand for Apple® iPad®
+  2:  ID: 1218343866820  SKU: 2678269(not in most clicked)  Name: Logitech - Tablet Keyboard for Apple® iPad®, iPad 2 and iPad (3rd Generation)
+  3:  ID: 1218424266746  SKU: 3640066(not in most clicked)  Name: Rocketfish™ - Bluetooth Speaker for Apple® iPad®, iPad 2 and iPad (3rd Generation)
+  4:  ID: 1218429236240  SKU: 3725243(not in most clicked)  Name: iPad® - Refurbished Dock
+  5:  ID: 1218429230437  SKU: 3725313(not in most clicked)  Name: iPad® - Refurbished Dock
+  6:  ID: 1218246670763  SKU: 1271742(not in most clicked)  Name: Apple® - iPad™ Case
+  7:  ID: 1218189848242  SKU: 9889733(not in most clicked)  Name: Apple® - iPad™ Case
+  8:  ID: 1218477003551  SKU: 4382243(not in most clicked)  Name: HADAKI - Wrap for Apple® iPad® and iPad 2 - Teal
+  9:  ID: 1218463171480  SKU: 4207114(not in most clicked)  Name: Hard Candy Cases - Sleek Skin SK-IPAD-CLR For IPAD - Clear
+ 10:  ID: 1218463147005  SKU: 4207123(not in most clicked)  Name: Hard Candy Cases - Sleek Skin SK-IPAD-GRN For IPAD - Green
+
+Query: touchpad
+Sort field: _score,  Sort dir: desc,  Model: simple,  Explain is disabled
+Search is probably looking for a touchpad, specifically the computer input
+device with functionality similar to a mouse.
+Mark relevant rows with asterisk.
+* 1:  ID: 1218402128856  SKU: 3438568(not in most clicked)  Name: Logitech - Wireless Touchpad - Black
+  2:  ID: 1074788285500  SKU: 4744842(not in most clicked)  Name: Maytag - Touchpad Dishwasher - White
+  3:  ID: 1074788285388  SKU: 4747251(not in most clicked)  Name: Maytag - Touchpad Dishwasher - Black
+  4:  ID: 1218386676114  SKU: 2884137(not in most clicked)  Name: HP - USB Charger for HP TouchPad
+  5:  ID: 1051384408686  SKU: 4744405(not in most clicked)  Name: Maytag - 24" Touchpad Built-In Dishwasher - Black
+  6:  ID: 1051384409431  SKU: 4747055(not in most clicked)  Name: Maytag - 24" Touchpad Built-In Dishwasher - Bisque
+* 7:  ID: 1218405752109  SKU: 3459958(not in most clicked)  Name: Prestige - Perrix Ergonomic USB Touchpad Keyboard - Black
+  8:  ID: 1218367179883  SKU: 2947041(    in most clicked)  Name: ZAGG - InvisibleSHIELD for HP TouchPad Tablets
+  9:  ID: 1218363391404  SKU: 2883101(not in most clicked)  Name: HP - Wireless Keyboard for HP TouchPad Tablets
+ 10:  ID: 1218324524139  SKU: 2252095(not in most clicked)  Name: Adesso - SlimTouch Ergo Mini Wireless Touchpad Keyboard
+
+Query: beats
+Sort field: _score,  Sort dir: desc,  Model: simple,  Explain is disabled
+I have no idea what the searcher is searching for.  This seems too generic.
+I will attempt to guess relevance based on whether the product appears to
+be something named Beats, as opposed to the word Beats being used as an
+extra descriptor.  In the list below, albums with Beats in the name seem
+relevant.  If the searcher were looking for headphones, I would have
+expected that to be specified.
+Mark relevant rows with asterisk.
+  1:  ID: 1218239170477  SKU: 1232474(    in most clicked)  Name: Beats By Dr. Dre - Beats iBeats Earbud Headphones
+* 2:  ID: 2397352  SKU: 19960767(not in most clicked)  Name: Angel Beats: Op My Soul - Your Beats - CD
+* 3:  ID: 285067  SKU: 2018569(not in most clicked)  Name: Jeep Beats - CASSETTE
+* 4:  ID: 124220  SKU: 2799314(not in most clicked)  Name: Heart Beats - CD
+* 5:  ID: 180133  SKU: 3016088(not in most clicked)  Name: Back Beats - CD
+* 6:  ID: 164334  SKU: 3342449(not in most clicked)  Name: Explorimenting Beats - CD
+* 7:  ID: 163541  SKU: 3682410(not in most clicked)  Name: Explicit Beats - CD
+* 8:  ID: 133514  SKU: 10275463(not in most clicked)  Name: Beats Workin' - CD
+* 9:  ID: 211190  SKU: 10291668(not in most clicked)  Name: 68 Beats - CD
+*10:  ID: 186646  SKU: 10438733(not in most clicked)  Name: Nerve Beats - CD
+
+Overall, the relevance ranged from practically none to practically all, but
+more frequently high.  The first relevant result, if there were any, tended
+to be near the top.  The search did better than I expected, but tanked on
+the iPad query, presumably because there are so many iPad accessories and
+iPad-related items that it is hard to find the actual iPads.  The results
+are almost never in the list of the most-clicked items from the queries
+database.
