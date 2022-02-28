@@ -280,6 +280,24 @@ def create_query(user_query, click_prior_query, filters, sort="_score", sortDir=
         add_aggs(query_obj)
     return query_obj
 
+def create_query_clicked_skus(queryString, topN=5, aggName='SKUs'):
+    '''
+    Returns a query to determine the topN most popular clicked SKUs for the
+    given query string.
+    '''
+    return {
+        'size': 0,
+        'query': {
+            'bool': {
+                'filter': [ { 'term': { 'query.keyword': queryString } } ]
+            }
+        },
+        'aggs': {
+            aggName: { 'terms': { 'size': topN, 'field': 'sku.keyword' } }
+        }
+    }
+# End of create_query_clicked_skus().
+
 
 def add_aggs(query_obj):
     query_obj["aggs"] = {

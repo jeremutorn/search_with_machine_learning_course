@@ -10,6 +10,8 @@ from week2.opensearch import get_opensearch
 import week2.utilities.query_utils as qu
 import week2.utilities.ltr_utils as lu
 
+from week2.utilities.query_logger import queryLogger
+
 bp = Blueprint('search', __name__, url_prefix='/search')
 
 
@@ -135,6 +137,23 @@ def query():
     response = opensearch.search(body=query_obj, index="bbuy_products", explain=explain)
     # Postprocess results here if you so desire
 
+    skuSet = None
+    if (queryLogger.path is not None):
+        # For logging purposes, determine the most popular clicked results
+        # for the query, if possible.
+        skuSet = get_clicked_skus(opensearch, user_query)
+
+    # Log results.
+    queryLogger.log(query         =user_query,
+                    displayFilters=display_filters,
+                    appliedFilters=applied_filters,
+                    sortField     =sort,
+                    sortDir       =sortDir,
+                    model         =model,
+                    explain       =explain,
+                    response      =response,
+                    skuSet        =skuSet)
+
     #print(response)
     if error is None:
         return render_template("search_results.jinja2", query=user_query, search_response=response,
@@ -143,6 +162,37 @@ def query():
     else:
         redirect(url_for("index"))
 
+def get_clicked_skus(opensearch, queryString, topN=5):
+    '''
+    Run an extra search to get the topN most popular clicked SKUs for the
+    given query.
+    '''
+    ret = set()
+    aggName = 'SKUs'
+    query = qu.create_query_clicked_skus(queryString, aggName=aggName)
+    response = opensearch.search(index='bbuy_queries', body=query)
+    if (not response):
+        return ret
+    aggs = response.get('aggregations', None)
+    if (not aggs):
+        return ret
+    agg = aggs.get(aggName, None)
+    if (not agg):
+            return ret
+    buckets = agg.get('buckets', None)
+    if (not buckets):
+        return ret
+    print('SKU counts for query:')
+    for bucket in buckets:
+        key   = bucket.get('key'      , None)
+        count = bucket.get('doc_count', None)
+        if (key is None or count is None):
+            print('  Incomplete bucket')
+        else:
+            print('  {key:9s}:  {count:8d}'.format(key=key, count=count))
+            ret.add(key)
+    return ret
+# End of get_clicked_skus().
 
 def get_click_prior(user_query):
     click_prior = ""
