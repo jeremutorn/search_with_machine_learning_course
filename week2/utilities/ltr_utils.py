@@ -49,10 +49,49 @@ def create_sltr_hand_tuned_query(user_query, query_obj, click_prior_query, ltr_m
     query_obj["query"]["function_score"]["query"]["bool"]["should"].append(sltr)
     return query_obj, len(query_obj["query"]["function_score"]["query"]["bool"]["should"])
 
-def create_feature_log_query(query, doc_ids, click_prior_query, featureset_name, ltr_store_name, size=200, terms_field="_id"):
-    print("IMPLEMENT ME: create_feature_log_query")
-    return None
-
+def create_feature_log_queries(
+        query, doc_ids, click_prior_query,
+        featureset_name, ltr_store_name,
+        maxPerQuery=200, terms_field="_id"):
+    queryList = list()
+    for docIndStart in range(0, len(doc_ids), maxPerQuery):
+        size = min(len(doc_ids) - docIndStart, maxPerQuery)
+        docIndEnd = docIndStart + size
+        if (0 >= size):
+            break
+        queryList.append({
+            'size': size,
+            'query': {
+                'bool': {
+                    'filter': [
+                        { 'terms':
+                            { terms_field: doc_ids[docIndStart : docIndEnd] }
+                        },
+                        {
+                            'sltr': {
+                                '_name'     : 'logged_featureset',
+                                'featureset': featureset_name,
+                                'store'     : ltr_store_name,
+                                'params': {
+                                    'keywords'         : query,
+                                    'click_prior_query': click_prior_query
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            'ext': {
+                'ltr_log': {
+                    'log_specs': {
+                        'name'       : 'log_entry',
+                        'named_query': 'logged_featureset'
+                    }
+                }
+            }
+        })
+    return queryList
+# End of create_feature_log_queries().
 
 # Item is a Pandas namedtuple
 def get_features(item, exclusions, col_names):

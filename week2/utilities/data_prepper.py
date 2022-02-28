@@ -229,9 +229,9 @@ class DataPrepper:
     # For each query, make a request to OpenSearch with SLTR logging on and extract the features
     def __log_ltr_query_features(self, query_id, key, query_doc_ids, click_prior_query, no_results, terms_field="_id"):
 
-        log_query = lu.create_feature_log_query(key, query_doc_ids, click_prior_query, self.featureset_name,
-                                                self.ltr_store_name,
-                                                size=len(query_doc_ids), terms_field=terms_field)
+        log_queries = lu.create_feature_log_queries(key, query_doc_ids, click_prior_query, self.featureset_name,
+                                                    self.ltr_store_name,
+                                                    terms_field=terms_field)
         # IMPLEMENT_START --
         print("IMPLEMENT ME: __log_ltr_query_features: Extract log features out of the LTR:EXT response and place in a data frame")
         # Loop over the hits structure returned by running `log_query` and then extract out the features from the response per query_id and doc id.  Also capture and return all query/doc pairs that didn't return features
