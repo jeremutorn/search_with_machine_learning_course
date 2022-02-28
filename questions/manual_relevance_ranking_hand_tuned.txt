@@ -1,0 +1,73 @@
+Query: lcd tv
+Sort field: _score,  Sort dir: desc,  Model: hand_tuned,  Explain is disabled
+Searcher is probably looking for a television with an LCD display.
+Probably not a portable TV, but unless they try to exclude it, portable
+seems relevant.
+Mark relevant rows with asterisk.
+* 1:  ID: 1099389620562  SKU: 6986112(not in most clicked)  Name: Magnavox - 15" HD-Ready LCD TV w/HD Component Video Inputs
+* 2:  ID: 1152228986594  SKU: 7945511(not in most clicked)  Name: Curtis - 7" Widescreen LCD Portable TV
+* 3:  ID: 1218483794647  SKU: 4550412(not in most clicked)  Name: Insignia™ - 19" Class - LCD - 720p - 60Hz - HDTV - DVD Combo
+* 4:  ID: 1122652625649  SKU: 7326351(not in most clicked)  Name: Konka - 15" ED-Ready LCD TV w/Composite Video Input
+* 5:  ID: 1165610379206  SKU: 8205435(not in most clicked)  Name: Insignia® - 19" 720p Widescreen Flat-Panel LCD HDTV
+  6:  ID: 1218102964465  SKU: 9416928(not in most clicked)  Name: Rocketfish™ - LCD Cleaning Kit
+* 7:  ID: 1218483794943  SKU: 4550458(not in most clicked)  Name: Insignia™ - 40" Class - LCD - 1080p - 60Hz - HDTV
+  8:  ID: 1218189847810  SKU: 9889724(not in most clicked)  Name: Apple® - Dock Connector-to-VGA Adapter for Apple® iPad®
+* 9:  ID: 1218523198748  SKU: 4757283(not in most clicked)  Name: Sony - 32" Class - LCD - 720p - 60Hz - HDTV
+ 10:  ID: 1218562660687  SKU: 4876429(not in most clicked)  Name: Digital Innovations - ScreenDr Pro 5-Oz. Screen Cleaning System
+
+Query: ipad
+Sort field: _score,  Sort dir: desc,  Model: hand_tuned,  Explain is disabled
+Searcher is probably looking for an iPad, not an iPad accessory.
+Mark relevant rows with asterisk.
+  1:  ID: 1218195739621  SKU: 9924603(not in most clicked)  Name: Apple® - iPad™ Digital Camera Connection Kit
+  2:  ID: 1218572406686  SKU: 4879523(not in most clicked)  Name: Zagg - InvisibleSHIELD HD for Apple® iPad® (3rd Generation)
+* 3:  ID: 1218303031896  SKU: 1945531(    in most clicked)  Name: Apple® - iPad® 2 with Wi-Fi - 16GB - Black
+* 4:  ID: 1218321299000  SKU: 2339322(    in most clicked)  Name: Apple® - iPad® 2 with Wi-Fi - 16GB - White
+* 5:  ID: 1218572400461  SKU: 4881142(not in most clicked)  Name: Apple® - The new iPad® with Wi-Fi - 16GB - White
+* 6:  ID: 1218572403790  SKU: 4881072(not in most clicked)  Name: Apple® - The new iPad® with Wi-Fi - 16GB - Black
+  7:  ID: 1218450049950  SKU: 4020232(not in most clicked)  Name: Apple® - Smart Cover for Apple® iPad® 2 and iPad (3rd Generation) - Dark Gray
+  8:  ID: 1218330050323  SKU: 2490083(not in most clicked)  Name: Griffin Technology - Survivor Case for Apple iPad 2 and iPad (3rd Generation) - Black
+  9:  ID: 1218698667635  SKU: 5872041(not in most clicked)  Name: Apple® - Smart Case for Apple® iPad® 2 and iPad (3rd Generation) - Dark Gray
+ 10:  ID: 1218189848734  SKU: 9889715(not in most clicked)  Name: Apple® - USB Power Adapter for Apple® iPad™
+
+Query: touchpad
+Sort field: _score,  Sort dir: desc,  Model: hand_tuned,  Explain is disabled
+Search is probably looking for a touchpad, specifically the computer input
+device with functionality similar to a mouse.
+Mark relevant rows with asterisk.
+  1:  ID: 1218443144549  SKU: 3937943(not in most clicked)  Name: Logitech - M325 Mouse
+  2:  ID: 1218443147437  SKU: 3937952(not in most clicked)  Name: Logitech - M325 Mouse
+  3:  ID: 1218431571141  SKU: 3764993(not in most clicked)  Name: Logitech - K400 Keyboard
+  4:  ID: 1218197326795  SKU: 9929052(not in most clicked)  Name: Oster - 0.7 Cu. Ft. Compact Microwave - Stainless-Steel/Black
+  5:  ID: 1118845062170  SKU: 7331595(not in most clicked)  Name: Creative Labs - Zen Sleek 20GB* MP3 Player - Silver
+* 6:  ID: 1218402128856  SKU: 3438568(not in most clicked)  Name: Logitech - Wireless Touchpad - Black
+  7:  ID: 1074788285500  SKU: 4744842(not in most clicked)  Name: Maytag - Touchpad Dishwasher - White
+  8:  ID: 1074788285388  SKU: 4747251(not in most clicked)  Name: Maytag - Touchpad Dishwasher - Black
+  9:  ID: 1218386676114  SKU: 2884137(not in most clicked)  Name: HP - USB Charger for HP TouchPad
+ 10:  ID: 1051384408686  SKU: 4744405(not in most clicked)  Name: Maytag - 24" Touchpad Built-In Dishwasher - Black
+
+Query: beats
+Sort field: _score,  Sort dir: desc,  Model: hand_tuned,  Explain is disabled
+I have no idea what the searcher is searching for.  This seems too generic.
+I will attempt to guess relevance based on whether the product appears to
+be something named Beats, as opposed to the word Beats being used as an
+extra descriptor.  In the list below, albums with Beats in the name seem
+relevant.  If the searcher were looking for headphones, I would have
+expected that to be specified.
+Mark relevant rows with asterisk (none seem relevant).
+  1:  ID: 1218239170477  SKU: 1232474(    in most clicked)  Name: Beats By Dr. Dre - Beats iBeats Earbud Headphones
+  2:  ID: 1218113928653  SKU: 9492426(    in most clicked)  Name: Beats By Dr. Dre - Beats Tour Earbud Headphones - Black
+  3:  ID: 1218239488189  SKU: 1232447(not in most clicked)  Name: Beats By Dr. Dre - Beats Solo HD Over-the-Ear Headphones - White
+  4:  ID: 1218181727179  SKU: 9836718(    in most clicked)  Name: Beats By Dr. Dre - Beats Solo HD Over-the-Ear Headphones - Black
+  5:  ID: 1218677977677  SKU: 5667118(not in most clicked)  Name: Beats By Dr. Dre - Beats Solo High-Definition Over-the-Ear Headphones - Smartie Blue
+  6:  ID: 1218239168480  SKU: 1232483(not in most clicked)  Name: Beats By Dr. Dre - Monster PowerBeats Earbud Headphones - Black
+  7:  ID: 1218181728861  SKU: 9836432(not in most clicked)  Name: Beats By Dr. Dre - Beats (Solo HD) RED Edition Over-the-Ear Headphones - Red
+  8:  ID: 1214611180610  SKU: 8913606(    in most clicked)  Name: Beats By Dr. Dre - Beats Studio Over-the-Ear Headphones - Black
+  9:  ID: 1218405776588  SKU: 3476048(not in most clicked)  Name: Beats By Dr. Dre - Beats Studio Over-the-Ear Headphones - Blue
+ 10:  ID: 1218505466187  SKU: 4676961(not in most clicked)  Name: Beats By Dr. Dre - Beats Mixr Over-the-Ear Headphones - Black
+
+Overall, the relevance seemed a little worse than the simple query, except the
+iPad query now actually returns some iPad results.  Based on what is most
+popular by clicks, my thoughts on what is relevant for the beats query are off.
+Based on clicks, it looks like more people are interested in the Beats by Dr.
+Dre Headphones.

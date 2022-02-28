@@ -1,0 +1,78 @@
+Query: lcd tv
+Sort field: _score,  Sort dir: desc,  Model: ht_LTR,  Explain is disabled
+Searcher is probably looking for a television with an LCD display.
+Probably not a portable TV, but unless they try to exclude it, portable
+seems relevant.
+Mark relevant rows with asterisk.
+* 1:  ID: 1218301179081  SKU: 1831054(    in most clicked)  Name: RCA - 46" Class - LCD - 1080p - 60Hz - HDTV
+* 2:  ID: 1218361269835  SKU: 2893174(    in most clicked)  Name: Samsung - 32" Class - LCD -720p - 60Hz - HDTV
+* 3:  ID: 1218135452883  SKU: 9632192(not in most clicked)  Name: Memorex - Refurbished Under-the-Cabinet LCD TV DVD Combo
+* 4:  ID: 1055388005138  SKU: 5562401(not in most clicked)  Name: Sanus - Wall Mount for 13" - 30" Flat-Panel LCD TVs
+* 5:  ID: 1218661381932  SKU: 5563131(not in most clicked)  Name: HP - 20" Widescreen Flat-Panel LCD-LED Monitor
+* 6:  ID: 1055388005197  SKU: 5564793(not in most clicked)  Name: Samsung - 15" Flat-Panel LCD TV with Progressive Scan - Silver
+* 7:  ID: 1055388005257  SKU: 5564819(not in most clicked)  Name: Samsung - 15" HD-Ready Flat-Panel LCD TV w/ DVI, PC &amp; DVD Inputs - Silver
+* 8:  ID: 1055388005317  SKU: 5564828(not in most clicked)  Name: Samsung - 17" HD-Ready Flat-Panel LCD TV w/ DVI, PC &amp; DVD Inputs - Silver
+* 9:  ID: 1055388005377  SKU: 5564837(not in most clicked)  Name: Samsung - 17" Widescreen HD-Ready Flat-Panel LCD TV w/ DVI, PC &amp; DVD Inputs - Silver
+*10:  ID: 1055388005975  SKU: 5568753(not in most clicked)  Name: Panasonic - 50" Widescreen HD-Ready Rear-Projection LCD TV w/ DVI Input &amp; 2-Tuner PIP - Silver
+
+Query: ipad
+Sort field: _score,  Sort dir: desc,  Model: ht_LTR,  Explain is disabled
+Searcher is probably looking for an iPad, not an iPad accessory.
+The Asus tablet in slot 10 is perhaps an alternative, but not quite what
+was searched for.
+Mark relevant rows with asterisk (and a question mark for the Asus table).
+* 1:  ID: 1218303031896  SKU: 1945531(    in most clicked)  Name: Apple® - iPad® 2 with Wi-Fi - 16GB - Black
+* 2:  ID: 1218321299000  SKU: 2339322(    in most clicked)  Name: Apple® - iPad® 2 with Wi-Fi - 16GB - White
+  3:  ID: 1218663133470  SKU: 5569108(not in most clicked)  Name: Wacom - Bamboo Stylus and Pen for Apple® iPad® - Silver/Black
+  4:  ID: 1218663134451  SKU: 5569135(not in most clicked)  Name: Rocketfish™ - Snap Case for Apple® iPad® 2 and iPad (3rd Generation) - Red
+  5:  ID: 1218663133096  SKU: 5569144(not in most clicked)  Name: Rocketfish™ - Snap Case for Apple® iPad® 2 and iPad (3rd Generation) - Purple
+  6:  ID: 1218663132249  SKU: 5569153(not in most clicked)  Name: Rocketfish™ - Snap Case for Apple® iPad® 2 and iPad (3rd Generation) - Pink
+  7:  ID: 1218663131913  SKU: 5569162(not in most clicked)  Name: Rocketfish™ - Snap Case for Apple® iPad® 2 and iPad (3rd Generation) - Blue
+  8:  ID: 1218663133226  SKU: 5569171(not in most clicked)  Name: Rocketfish™ - Snap Case for Apple® iPad® 2 and iPad (3rd Generation) - Cyan
+  9:  ID: 1218663133804  SKU: 5569199(not in most clicked)  Name: Rocketfish™ - Snap Case for Apple® iPad® 2 and iPad (3rd Generation) - Yellow
+?10:  ID: 1218635271532  SKU: 5359476(not in most clicked)  Name: Asus - Tablet with 32GB Memory - Blue
+
+Query: touchpad
+Sort field: _score,  Sort dir: desc,  Model: ht_LTR,  Explain is disabled
+Search is probably looking for a touchpad, specifically the computer input
+device with functionality similar to a mouse.
+Mark relevant rows with asterisk.
+* 1:  ID: 1218358284065  SKU: 2842056(    in most clicked)  Name: HP - TouchPad Tablet with 16GB Memory - Black
+  2:  ID: 1218137445829  SKU: 9648678(not in most clicked)  Name: Cuisinart - Elite Series 14-Cup Food Processor - Black
+  3:  ID: 1218137446732  SKU: 9648696(not in most clicked)  Name: Cuisinart - Elite Collection 12-Cup Food Processor - Black
+  4:  ID: 1218137445957  SKU: 9648705(not in most clicked)  Name: Cuisinart - Elite Collection 12-Cup Food Processor - White
+  5:  ID: 1218137446186  SKU: 9648714(not in most clicked)  Name: Cuisinart - Elite Series 14-Cup Food Processor - White
+  6:  ID: 1218137446590  SKU: 9648723(not in most clicked)  Name: Cuisinart - Elite Series 14-Cup Food Processor - Silver
+  7:  ID: 1218137724751  SKU: 9650346(not in most clicked)  Name: Cuisinart - Refurbished 4-Slice Wide Slot Toaster - Black
+  8:  ID: 1218137724816  SKU: 9650576(not in most clicked)  Name: Waring Pro - Refurbished Electric Martini Maker - Stainless-Steel
+  9:  ID: 1218140276169  SKU: 9660015(not in most clicked)  Name: Frigidaire - Affinity 7.0 Cu. Ft. 7-Cycle Electric Dryer - Classic Silver
+ 10:  ID: 1218132466213  SKU: 9622025(not in most clicked)  Name: GE - Profile 30" Self-Cleaning Slide-In Electric Range - Black-on-Black
+
+Query: beats
+Sort field: _score,  Sort dir: desc,  Model: ht_LTR,  Explain is disabled
+I have no idea what the searcher is searching for.  This seems too generic.
+I will attempt to guess relevance based on whether the product appears to
+be something named Beats, as opposed to the word Beats being used as an
+extra descriptor.  In the list below, albums with Beats in the name seem
+relevant.  If the searcher were looking for headphones, I would have
+expected that to be specified.
+Mark relevant rows with asterisk.
+  1:  ID: 1218181727179  SKU: 9836718(    in most clicked)  Name: Beats By Dr. Dre - Beats Solo HD Over-the-Ear Headphones - Black
+  2:  ID: 1218113928653  SKU: 9492426(    in most clicked)  Name: Beats By Dr. Dre - Beats Tour Earbud Headphones - Black
+  3:  ID: 1218239170477  SKU: 1232474(    in most clicked)  Name: Beats By Dr. Dre - Beats iBeats Earbud Headphones
+  4:  ID: 1214611180610  SKU: 8913606(    in most clicked)  Name: Beats By Dr. Dre - Beats Studio Over-the-Ear Headphones - Black
+  5:  ID: 1218113928461  SKU: 9492408(not in most clicked)  Name: Beats By Dr. Dre - Beats Solo Over-the-Ear Headphones - Black
+  6:  ID: 1218134614922  SKU: 9632217(not in most clicked)  Name: Beats By Dr. Dre - Beats Studio Over-the-Ear Headphones - White
+* 7:  ID: 1421884  SKU: 5385996(not in most clicked)  Name: Smokin Beats [PA] - Various - CD
+* 8:  ID: 1340096  SKU: 6147314(not in most clicked)  Name: Flavored Beats 4 - CD
+* 9:  ID: 1339369  SKU: 6135014(not in most clicked)  Name: Blue-Eyed Break Beats - CD
+*10:  ID: 261029  SKU: 5520885(not in most clicked)  Name: Hot And Tasty Beats - CD
+
+Overall, the relevance seemed a little worse than the simple query, except
+the iPad query now actually returns some iPad results, and they are first.
+This returns fewer iPads than the hand tuned results, but they are in the
+first two slots, which seems good.  Based on what is most popular by
+clicks, my thoughts on what is relevant for the beats query are off.  Based
+on clicks, it looks like more people are interested in the Beats by Dr.
+Dre Headphones.  The touchpad query likes kitchen appliances as much as the
+hand tuned results.
