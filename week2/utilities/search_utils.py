@@ -319,6 +319,9 @@ def get_explain_query_for_type(query, type, click_prior_query, ltr_model_name, l
 
 def lookup_product(sku, opensearch, index="bbuy_products", source=None):
     try:
+        # NOTE:  This searches for a document with sku as its ID.
+        # The logstash configuration in logstash/index-bbuy.logstash sets
+        # the document_id to the sku value, which is why this works.
         return opensearch.get(index, sku, _source=source)
     except NotFoundError:
         return None
