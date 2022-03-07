@@ -2,3 +2,10 @@ This is a framework for running the cooking test described in the course.
 Using a Makefile makes it a little more convenient to tweak certain steps.
 The commands are all basically the same as those given in
 /week3/fastTextTutorial.sh.
+
+NOTE:  Some of the fasttext commands have a -thread option that can be used
+to speed things up.  That seems like it should make their speed comparable
+to the python interface, used in /week3/fastTextTutorial.py, but it does
+not seem to have any effect.  Using the python interface appears to be
+significantly faster than using the command-line fasttext interface, due to
+its ability to be multithreaded.
