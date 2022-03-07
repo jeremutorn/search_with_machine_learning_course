@@ -14,6 +14,7 @@ default:
 	@echo '  all:    Create all files.'
 	@echo '  clean:  Clean generated files.'
 	@echo '  test:   Run the tests.'
+	@echo '  test5:  Run the tests with top 5 instead of 1.'
 	@echo '  try:    Try running on manual input.'
 
 all:	$(TRAIN) $(TEST) $(MODEL)
@@ -27,6 +28,9 @@ try:	$(MODEL)
 
 test:	$(MODEL) $(TEST)
 	fasttext test "$(MODEL)" "$(TEST)"
+
+test5:	$(MODEL) $(TEST)
+	fasttext test "$(MODEL)" "$(TEST)" 5
 
 # Use -$(TESTNUM) so that all but the last TESTNUM are used for training.
 # The last $(TESTNUM) will be used for testing.
