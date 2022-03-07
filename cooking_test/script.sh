@@ -6,4 +6,5 @@ if [ -z "$INPUT" -o -z "$OUTPUT" ] ; then
 	echo 'Need INPUT and OUTPUT.'
 	exit 1
 fi
-exec fasttext supervised -input "$INPUT" -output "$OUTPUT" -lr 1.0 -epoch 25
+exec fasttext supervised -input "$INPUT" -output "$OUTPUT" \
+                         -lr 1.0 -epoch 25 -wordNgrams 2
