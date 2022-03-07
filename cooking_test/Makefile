@@ -1,5 +1,6 @@
-BASE = data/cooking
-FILE = $(BASE)/cooking.stackexchange.txt
+BASE    = data/cooking
+FILE    = $(BASE)/cooking.stackexchange.txt
+PREPROC = cooking.preprocessed.txt
 
 TESTNUM   = 3000
 TRAIN     = cooking.train
@@ -20,7 +21,7 @@ default:
 all:	$(TRAIN) $(TEST) $(MODEL)
 
 clean:
-	rm -f -- "$(TRAIN)" "$(TEST)" "$(MODELBASE)"*
+	rm -f -- "$(PREPROC)" "$(TRAIN)" "$(TEST)" "$(MODELBASE)"*
 
 try:	$(MODEL)
 	echo 'Trying (CTRL-D when done) ...'
@@ -32,13 +33,20 @@ test:	$(MODEL) $(TEST)
 test5:	$(MODEL) $(TEST)
 	fasttext test "$(MODEL)" "$(TEST)" 5
 
+$(PREPROC):	$(FILE)
+	# Separate punctuation, and convert to lowercase.
+	cat -- "$(<)" \
+		| sed -e "s/\([.\!?,'/()]\)/ \1 /g" \
+		| tr '[:upper:]' '[:lower:]' \
+		>"$@"
+
 # Use -$(TESTNUM) so that all but the last TESTNUM are used for training.
 # The last $(TESTNUM) will be used for testing.
-$(TRAIN):
-	head -n "-$(TESTNUM)" -- "$(FILE)" >"$@"
+$(TRAIN):	$(PREPROC)
+	head -n "-$(TESTNUM)" -- "$<" >"$@"
 
-$(TEST):
-	tail -n "$(TESTNUM)" -- "$(FILE)" >"$@"
+$(TEST):	$(PREPROC)
+	tail -n "$(TESTNUM)" -- "$<" >"$@"
 
 $(MODEL):	$(SCRIPT) $(TRAIN)
 	./script.sh "$(TRAIN)" "$(MODELBASE)"
