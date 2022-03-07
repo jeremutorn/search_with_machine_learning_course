@@ -18,13 +18,21 @@ def annotate():
         response = {}
         cat_model = current_app.config.get("cat_model", None) # see if we have a category model
         syns_model = current_app.config.get("syns_model", None) # see if we have a synonyms/analogies model
+        name_transformer = current_app.config.get("transformer", None)
         # We have a map of fields to annotate.  Do POS, NER on each of them
         sku = the_doc["sku"]
         for item in the_doc:
             the_text = the_doc[item]
             if the_text is not None and the_text.find("%{") == -1:
                 if item == "name":
-                    if syns_model is not None:
-                        print("IMPLEMENT ME: call nearest_neighbors on your syn model and return it as `name_synonyms`")
+                    if syns_model is not None and name_transformer is not None:
+                        name_synonyms = set()
+                        for token in name_transformer.transform(the_text).split():
+                            nearest_neighbors = \
+                                syns_model.get_nearest_neighbors(the_text, k=32)
+                            for (score, synonym) in nearest_neighbors:
+                                if (score > 0.999):
+                                    name_synonyms.add(synonym)
+                        response["synonyms"] = tuple(name_synonyms)
         return jsonify(response)
     abort(415)
