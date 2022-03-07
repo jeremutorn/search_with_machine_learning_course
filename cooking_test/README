@@ -1,0 +1,4 @@
+This is a framework for running the cooking test described in the course.
+Using a Makefile makes it a little more convenient to tweak certain steps.
+The commands are all basically the same as those given in
+/week3/fastTextTutorial.sh.
