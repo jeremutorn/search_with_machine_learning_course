@@ -4,9 +4,41 @@ import random
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-def transform_name(product_name):
-    # IMPLEMENT
-    return product_name
+import nltk.stem
+
+class NameTransformer(object):
+    '''
+    Quick class to provide a method for transforming product names.
+    '''
+
+    def transform(self, name):
+        '''
+        Transforms a name, converting to lowercase, removing punctuation,
+        setmming, and so on.
+        '''
+        lowerCase = name.lower()
+        unknownCharactersRemoved = \
+            ''.join(map(lambda c: c if (c in self._allowedCharacters) else ' ',
+            lowerCase))
+        stemmed = ' '.join(self._stemmer.stem(word) \
+                           for word in unknownCharactersRemoved.split())
+        return stemmed
+    # End of transform().
+
+    _stemmer = nltk.stem.SnowballStemmer('english')
+    '''
+    The stemmer to use for transforming.
+    '''
+
+    _allowedCharacters = set()
+    '''
+    Characters not in this set will be removed.
+    '''
+    _allowedCharacters.update(chr(o) for o in range(ord('0'), ord('9') + 1))
+    _allowedCharacters.update(chr(o) for o in range(ord('A'), ord('Z') + 1))
+    _allowedCharacters.update(chr(o) for o in range(ord('a'), ord('z') + 1))
+    _allowedCharacters.update(('-', '_', '"', "'", '$', '%'))
+# End of NameTransformer class.
 
 # Directory for product data
 directory = r'/workspace/search_with_machine_learning_course/data/pruned_products/'
@@ -35,6 +67,7 @@ if args.input:
 min_products = args.min_products
 sample_rate = args.sample_rate
 
+nameTransformer = NameTransformer()
 print("Writing results to %s" % output_file)
 with open(output_file, 'w') as output:
     for filename in os.listdir(directory):
@@ -54,5 +87,5 @@ with open(output_file, 'w') as output:
                       cat = child.find('categoryPath')[len(child.find('categoryPath')) - 1][0].text
                       # Replace newline chars with spaces so fastText doesn't complain
                       name = child.find('name').text.replace('\n', ' ')
-                      output.write("__label__%s %s\n" % (cat, transform_name(name)))
+                      output.write("__label__%s %s\n" % (cat, nameTransformer.transform(name)))
 
