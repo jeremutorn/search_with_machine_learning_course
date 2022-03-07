@@ -1,0 +1,53 @@
+1. For classifying product names to categories:
+	a. What precision (P@1) were you able to achieve?
+	   Around 0.6.
+	b. What fastText parameters did you use?
+	   Just the ones given in the course:
+	   fasttext.train_supervised(input=args.input_train, lr=1.0, epoch=25, wordNgrams=2)
+	c. How did you transform the product names?
+	   1) Convert to lowercase
+		 2) Replace anything that is not 0-9, a-z, A-Z, and certain punctuation
+	      with spaces
+	   3) Split into words
+	   4) Stem with snowball stemmer
+	   5) Combine tokens into a single string
+	d. How did you prune infrequent category labels, and how did that affect
+	   your precision?
+	   I did not prune infrequent category labels, but I added the option to
+	   do so.  Doing so did increase the reported precision, but cut down on
+	   the amount of categorization that happened.
+	e. How did you prune the category tree, and how did that affect yoru
+	   precision?
+	   I did not prune the category tree by default, but I added the option
+	   to do so.  Using higher level categories improved precision, but
+	   greatly cut down on the granularity.
+
+2. For deriving synonyms from content:
+	a. What 20 tokens did you use for evaluation?
+	   I played around with iphone, ipad, black, computer, workstation, and a
+	   few others.  However, when I was working on part 3, where that would
+	   really matter, my training seemed to overfit, and may words had
+	   synonyms with greater than 0.999 similarity.  Which such high
+	   similarity, trying to pick a cutoff seemed rather silly.
+	b. What fastText parameters did you use?
+	   I had the option for using minCount, but I ended up just using vanilla
+	   skipgram.
+	c. How did you transform product names?
+	   Same process as 1.c.
+	d. What threshold score did you use?
+	   I had an overfitting problem, so I used 0.999.
+	e. What synonyms did you obtain for those tokens?
+	   Due to my overfitting, I did not check this.
+
+3. For integrating synonyms with search:
+	a. How did you transform the product names?
+	   Same as 1.c.
+	b. What threshold score did you use?
+	   See 2.d.
+	c. Were you able to find the additional results by matching synonyms?
+	   No.  I implemented the synonyms, but they seemed to have no effect.
+	   I intend to look into this, but I have some other things to fix first,
+	   like the overfitting.
+
+4. For classifying reviews:
+	 I did not do this part.
