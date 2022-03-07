@@ -56,6 +56,8 @@ general.add_argument("--sample_rate", default=1.0, type=float, help="The rate at
 
 general.add_argument("--min_products", default=0, type=int, help="The minimum number of products per category (default is 0).")
 
+general.add_argument("--max_catdepth", default=-1, type=int, help="The maximum category depth that will be used as a category (the default, -1, means always use maximum depth)")
+
 args = parser.parse_args()
 output_file = args.output
 path = Path(output_file)
@@ -80,14 +82,30 @@ for filename in os.listdir(directory):
             if random.random() > sample_rate:
                 continue
             # Check to make sure category name is valid
-            if (child.find('name') is not None and child.find('name').text is not None and
-                child.find('categoryPath') is not None and len(child.find('categoryPath')) > 0 and
-                child.find('categoryPath')[len(child.find('categoryPath')) - 1][0].text is not None):
-                  # Choose last element in categoryPath as the leaf categoryId
-                  cat = child.find('categoryPath')[len(child.find('categoryPath')) - 1][0].text
-                  # Replace newline chars with spaces so fastText doesn't complain
-                  name = child.find('name').text.replace('\n', ' ')
-                  catMap[cat].append(name)
+            name = child.find('name')
+            if (name is None or name.text is None):
+                continue
+            name = name.text
+            catPath = child.find('categoryPath')
+            if (catPath is None or 0 >= len(catPath)):
+                continue
+            catDepth = min(len(catPath) - 1, args.max_catdepth)
+            category = catPath[catDepth]
+            # category should be an iterable of category names; select the
+            # first, which seems to be the more programmatic descriptor;
+            # subsequent ones are more natural-language oriented.
+            if (0 >= len(category)):
+                continue
+            category = category[0]
+            if (category is None or category.text is None):
+                continue
+            category = category.text
+
+            # Replace newline chars with spaces so fastText doesn't complain
+            name = name.replace('\n', ' ')
+            # Just in case there are spaces.
+            category.replace(' ', '_')
+            catMap[category].append(name)
 
 print("Writing results to %s" % output_file)
 with open(output_file, 'w') as output:
