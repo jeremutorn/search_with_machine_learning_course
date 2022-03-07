@@ -4,6 +4,8 @@ import xml.etree.ElementTree as ET
 import argparse
 from pathlib import Path
 
+from nametransformer import NameTransformer
+
 directory = r'/workspace/search_with_machine_learning_course/data/pruned_products'
 parser = argparse.ArgumentParser(description='Process some integers.')
 general = parser.add_argument_group("general")
@@ -25,12 +27,9 @@ if args.input:
 
 sample_rate = args.sample_rate
 
-def transform_training_data(name):
-    # IMPLEMENT
-    return name.replace('\n', ' ')
-
 # Directory for product data
 
+nameTransformer = NameTransformer()
 print("Writing results to %s" % output_file)
 with open(output_file, 'w') as output:
     for filename in os.listdir(directory):
@@ -42,5 +41,5 @@ with open(output_file, 'w') as output:
                 if random.random() > sample_rate:
                     continue
                 if (child.find('name') is not None and child.find('name').text is not None):
-                    name = transform_training_data(child.find('name').text)
+                    name = nameTransformer.transform(child.find('name').text)
                     output.write(name + "\n")
