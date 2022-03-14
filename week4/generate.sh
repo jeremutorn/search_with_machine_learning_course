@@ -33,3 +33,25 @@ python create_labeled_queries.py \
 	echo 'Error creating query/category mappings.'
 	exit "$?"
 }
+
+python createTrainTestData.py \
+	--input        "$QUERY_CATEGORIES" \
+	--output_train "$QUERY_TRAIN" \
+	--output_test  "$QUERY_TEST" \
+	--train_size   524288 \
+	--test_size    524288 \
+|| {
+	ret="$?"
+	echo 'Error creating query training data.'
+	exit "$?"
+}
+
+python createModel.py \
+	--input_train "$QUERY_TRAIN" \
+	--input_test  "$QUERY_TEST" \
+	--output      "$QUERY_MODEL" \
+|| {
+	ret="$?"
+	echo 'Error creating query model.'
+	exit "$?"
+}
