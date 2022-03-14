@@ -5,10 +5,16 @@ from flask import (
     Blueprint, redirect, render_template, request, url_for, current_app
 )
 
+import nltk
+stemmer = nltk.stem.PorterStemmer()
+
 from week4.opensearch import get_opensearch
 
 import week4.utilities.query_utils as qu
 import week4.utilities.ltr_utils as lu
+
+from .utilities.normalizer import Normalizer
+normalizer = Normalizer(stemmer=stemmer)
 
 bp = Blueprint('search', __name__, url_prefix='/search')
 
@@ -56,9 +62,44 @@ def process_filters(filters_input):
 
     return filters, display_filters, applied_filters
 
-def get_query_category(user_query, query_class_model):
-    print("IMPLEMENT ME: get_query_category")
+def get_query_categories(user_query, query_class_model):
+    model = current_app.config.get('query_model', None)
+    if (model is None or user_query is None):
+        return None
+    # Use the same stemmer as was used in create_labeled_queries.py.
+    user_query = normalizer.normalize(user_query)
+    prefix = '__label__'
+    ret = list()
+    totalScore = 0
+    info = 'Query categories ({q:s}):'.format(q=user_query)
+    (predictions, scores) = model.predict(user_query, k=32)
+    for (score, prediction) in zip(scores, predictions):
+        totalScore += score
+        if (prediction.startswith(prefix)):
+            prediction = prediction[len(prefix):]
+        ret.append(prediction)
+        info += '  "{p:s}"({s:0.2f})'.format(p=prediction, s=score)
+        if (totalScore > 0.875):
+            print('Returning:  ' + info)
+            return ret
+    # Score was not high enough.  Do not return.
+    print('Not returning:  ' + info)
     return None
+
+
+def get_query_category_filter_list(query_categories):
+    filters = list()
+    if (query_categories is None or 0 >= len(query_categories)):
+        return filters
+    category_filter = {
+        'bool': {
+            'should': [{'term': {'categoryPathIds.keyword': cat}} \
+                       for cat in query_categories]
+        }
+    }
+    filters.append(category_filter)
+    print('Query categories filter:  {f:s}'.format(f=str(category_filter)))
+    return filters
 
 
 @bp.route('/query', methods=['GET', 'POST'])
@@ -70,7 +111,7 @@ def query():
     query_obj = None
     display_filters = None
     applied_filters = ""
-    filters = None
+    filters = list()
     sort = "_score"
     sortDir = "desc"
     model = "simple"
@@ -78,6 +119,7 @@ def query():
     ltr_store_name = "week2"
     ltr_model_name = "ltr_model"
     explain = False
+    query_class_model = current_app.config.get("query_model", None)
     if request.method == 'POST':  # a query has been submitted
         user_query = request.form['query']
         if not user_query:
@@ -94,21 +136,24 @@ def query():
         model = request.form.get("model", "simple")
         click_prior = get_click_prior(user_query)
 
+        query_categories = get_query_categories(user_query, query_class_model)
+        filters.extend(get_query_category_filter_list(query_categories))
+
         if model == "simple_LTR":
-            query_obj = qu.create_simple_baseline(user_query, click_prior, [], sort, sortDir, size=500)  # We moved create_query to a utility class so we could use it elsewhere.
+            query_obj = qu.create_simple_baseline(user_query, click_prior, filters, sort, sortDir, size=500)  # We moved create_query to a utility class so we could use it elsewhere.
             query_obj = lu.create_rescore_ltr_query(user_query, query_obj, click_prior, ltr_model_name, ltr_store_name,
                                                     rescore_size=500, main_query_weight=0)
             print("Simple LTR q: %s" % query_obj)
         elif model == "ht_LTR":
-            query_obj = qu.create_query(user_query, click_prior, [], sort, sortDir, size=500)  # We moved create_query to a utility class so we could use it elsewhere.
+            query_obj = qu.create_query(user_query, click_prior, filters, sort, sortDir, size=500)  # We moved create_query to a utility class so we could use it elsewhere.
             query_obj = lu.create_rescore_ltr_query(user_query, query_obj, click_prior, ltr_model_name, ltr_store_name,
                                                     rescore_size=500, main_query_weight=0)
             print("LTR q: %s" % query_obj)
         elif model == "hand_tuned":
-            query_obj = qu.create_query(user_query, click_prior, [], sort, sortDir, size=100)  # We moved create_query to a utility class so we could use it elsewhere.
+            query_obj = qu.create_query(user_query, click_prior, filters, sort, sortDir, size=100)  # We moved create_query to a utility class so we could use it elsewhere.
             print("Hand tuned q: %s" % query_obj)
         else:
-            query_obj = qu.create_simple_baseline(user_query, click_prior, [], sort, sortDir, size=100)  # We moved create_query to a utility class so we could use it elsewhere.
+            query_obj = qu.create_simple_baseline(user_query, click_prior, filters, sort, sortDir, size=100)  # We moved create_query to a utility class so we could use it elsewhere.
             print("Plain ol q: %s" % query_obj)
     elif request.method == 'GET':  # Handle the case where there is no query or just loading the page
         user_query = request.args.get("query", "*")
@@ -121,6 +166,8 @@ def query():
             explain = True
         if filters_input:
             (filters, display_filters, applied_filters) = process_filters(filters_input)
+        query_categories = get_query_categories(user_query, query_class_model)
+        filters.extend(get_query_category_filter_list(query_categories))
         model = request.args.get("model", "simiple")
         if model == "simple_LTR":
             query_obj = qu.create_simple_baseline(user_query, click_prior, filters, sort, sortDir, size=500)
@@ -135,16 +182,16 @@ def query():
     else:
         query_obj = qu.create_query("*", "", [], sort, sortDir, size=100)
 
-    query_class_model = current_app.config["query_model"]
-    query_category = get_query_category(user_query, query_class_model)
-    if query_category is not None:
-        print("IMPLEMENT ME: add this into the filters object so that it gets applied at search time.  This should look like your `term` filter from week 1 for department but for categories instead")
     #print("query obj: {}".format(query_obj))
     response = opensearch.search(body=query_obj, index=current_app.config["index_name"], explain=explain)
     # Postprocess results here if you so desire
 
     #print(response)
     if error is None:
+        if (query_categories is None):
+            query_category = None
+        else:
+            query_category = ', '.join(query_categories)
         return render_template("search_results.jinja2", query=user_query, search_response=response,
                                display_filters=display_filters, applied_filters=applied_filters,
                                sort=sort, sortDir=sortDir, model=model, explain=explain, query_category=query_category)
