@@ -23,10 +23,14 @@ output_file_name = r'/workspace/datasets/labeled_query_data.txt'
 
 parser = argparse.ArgumentParser(description='Process arguments.')
 general = parser.add_argument_group("general")
+general.add_argument("--input", default=queries_file_name, help="The input queries file to read")
+general.add_argument("--categories", default=categories_file_name, help="The categories XML file to parse to get the category tree")
 general.add_argument("--min_queries", default=1,  help="The minimum number of queries per category label (default is 1)")
 general.add_argument("--output", default=output_file_name, help="the file to output to")
 
 args = parser.parse_args()
+queries_file_name = args.input
+categories_file_name = args.categories
 output_file_name = args.output
 
 if args.min_queries:
